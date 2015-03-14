@@ -30,6 +30,7 @@ The language is designed such that any set of period-separated sentences is vali
     5/3   | EXIT
     ---   | NOP
 
+These ratios are not final as I would like to do some analysis on text to see what common and uncommon ratios are so I can map more important instructions (like GOTO) to the more common ratios.
 
 # Example cat program:
     Honestly this is very easy, much more simple than some.
@@ -76,3 +77,5 @@ ADD takes two arguments. NOP takes no arguments and results in 0.
 0 + 0 is 0
 
     0
+
+Using this method, any text could be interpreted with Wordy and would produce a valid program. One of the core ideas in Wordy was to make it as safe as possible. Part of the spec is that any undefined behavior, while left up to the implementer, must not crash or create errors during interpretation. Every possible program is valid.
