@@ -90,6 +90,7 @@ INNUM
 
 INCHAR
  reads a single character from stdin, value of INCHAR is unicode id of character read
+ results in 0 if eof read
 
 OUTNUM VALUE
  outputs value as a number to stdout, results in the value output
@@ -150,19 +151,21 @@ COMING SOON!
 
 Interpreter:
 
-PARTIALLY IMPLEMENTED! AND and OR are slightly broken
-
+IMPLEMENTED! AND and OR are slightly broken
 
 Cat:
-LABEL NOP OUTCHAR INCHAR GOTO NOP
-
-2/1 5/8 3/7 5/2 1/1 1/3
+LABEL NOP ASSIGN NOP OUTCHAR INCHAR GOTO NOT VALUE NOP
+2/1 5/8 13/7 4/11 3/7 5/2 1/1 5/13 2/3 1/3
 
 Honestly this is very easy, much more simple than some.
 It is named after the Unix command cat, although this command is actually more powerful.
+-
+-
 In the beginning there was no sense of heuristic algorithms with which they wrote.
 Weirdly thruvian melodics are not terribly complex.
 This is harder than I thought.
+-
+A tumbling set of of felines.
 Cats are fluffy but don't fuck with them unless you're ready for the consequences.
 
 
