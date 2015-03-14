@@ -3,20 +3,20 @@ wip esoteric programming language inspired by [Gertrude](http://p-nand-q.com/pro
 
 The language is designed such that any set of period-separated sentences is valid source code. Each sentence maps to one of a couple dozen instructions. The instruction that a sentence represents is found by finding the average word length in that sentence (rounded to the nearest integer) and then counting the number of words above and below that average. The ratio [words above average]/[words below average] is looked up in the below table. 2/3 maps to the same instruction as 4/9 (VALUE) and any ratio not explicitly mapped to an instruction is a NOP.
 
-   |ratio | command || ratio | command |
-   |:----:|:-------:||:-----:|:-------:|
-   |13/7  | ASSIGN  || 7/3   | LESS?   |
-   |2/3   | VALUE   || 9/5   | GREATER?|
-   |0/1   | LITERAL || 11/17 | OR      |
-   |2/1   | LABEL   || 13/3  | AND     |
-   |1/1   | GOTO    || 5/13  | NOT     |
-   |1/2   | ADD     || 4/7   | INNUM   |
-   |5/9   | SUBTRACT|| 5/2   | INCHAR  |
-   |3/4   | MULTIPLY|| 15/14 | OUTNUM  |
-   |4/1   | DIVIDE  || 3/7   | OUTCHAR |
-   |1/4   | MODULO  || 1/0   | RAND    |
-   |2/9   | ABS     || 5/3   | EXIT    |
-   |1/5   | EQUAL?  || ---   | NOP     |
+    |ratio | command || ratio | command |
+    |:----:|:-------:||:-----:|:-------:|
+    |13/7  | ASSIGN  || 7/3   | LESS?   |
+    |2/3   | VALUE   || 9/5   | GREATER?|
+    |0/1   | LITERAL || 11/17 | OR      |
+    |2/1   | LABEL   || 13/3  | AND     |
+    |1/1   | GOTO    || 5/13  | NOT     |
+    |1/2   | ADD     || 4/7   | INNUM   |
+    |5/9   | SUBTRACT|| 5/2   | INCHAR  |
+    |3/4   | MULTIPLY|| 15/14 | OUTNUM  |
+    |4/1   | DIVIDE  || 3/7   | OUTCHAR |
+    |1/4   | MODULO  || 1/0   | RAND    |
+    |2/9   | ABS     || 5/3   | EXIT    |
+    |1/5   | EQUAL?  || ---   | NOP     |
 
 These ratios are not final as I would like to do some analysis on text to see what common and uncommon ratios are so I can map more important instructions (like GOTO) to the more common ratios.
 
