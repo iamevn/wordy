@@ -1,10 +1,10 @@
 # Wordy
 wip esoteric programming language inspired by [Gertrude](http://p-nand-q.com/programming/languages/gplz/gertrude.html) and designed at 3am the week before finals.
 
-The language is designed such that any set of period-separated sentences is valid source code. Each sentence maps to one of a couple dozen instructions. The instruction that a sentence represents is found by finding the average word length in that sentence (rounded to the nearest integer) and then counting the number of words above and below that average. The ratio [words above average]/[words below average] is looked up in this table:
+The language is designed such that any set of period-separated sentences is valid source code. Each sentence maps to one of a couple dozen instructions. The instruction that a sentence represents is found by finding the average word length in that sentence (rounded to the nearest integer) and then counting the number of words above and below that average. The ratio [words above average]/[words below average] is looked up in the below table. 2/3 maps to the same instruction as 4/9 (VALUE) and any ratio not explicitly mapped to an instruction is a NOP.
 
     ratio | command
-    ------+---------
+    :----:|:-------:
     13/7  | ASSIGN
     2/3   | VALUE
     0/1   | LITERAL
@@ -30,8 +30,6 @@ The language is designed such that any set of period-separated sentences is vali
     5/3   | EXIT
     ---   | NOP
 
-
-2/3 maps to the same instruction as 4/9 (VALUE) and any ratio not explicitly mapped to an instruction is a NOP.
 
 # Example cat program:
     Honestly this is very easy, much more simple than some.
