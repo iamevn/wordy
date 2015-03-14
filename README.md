@@ -78,4 +78,4 @@ ADD takes two arguments. NOP takes no arguments and results in 0.
 
     0
 
-Using this method, any text could be interpreted with Wordy and would produce a valid program. One of the core ideas in Wordy was to make it as safe as possible. Part of the spec is that any undefined behavior, while left up to the implementer, must not crash or create errors during interpretation. Every possible program is valid.
+Using this method, any text could be interpreted with Wordy and would produce a valid program. One of the core ideas in designing Wordy was to make it as safe as possible. Part of the spec is that any undefined behavior, while left up to the implementer, must not crash or create errors during interpretation. Every possible program is valid.
