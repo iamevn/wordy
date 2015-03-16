@@ -6,6 +6,8 @@
 (require racket/vector)
 (require "db.rkt")
 
+(define lastcmd #f)
+
 (define (add-to-db file [source #f])
   (let loop ([sen (read-sentence file)])
     (when sen
@@ -22,4 +24,43 @@
   (call-with-input-file filename
     (λ (file)
       (add-to-db file filename)))
-  (close-connection))
+  #;(close-connection))
+
+(define (sentence-for-cmd cmd)
+  (set! lastcmd cmd)
+  (string-join
+   (let ([ls (if (equal? cmd 'NOP) (sentences-matching-no-ratio)
+                 (sentences-with-ratio (cmd->ratio cmd)))])
+     (list-ref ls (random (length ls))))
+   " "))
+(define (sentence-for-lit lit)
+  (set! lastcmd lit)
+  (string-join
+   (let ([ls (sentences-with-literal lit)])
+     (list-ref ls (random (length ls))))
+   " "))
+
+(define (again)
+  (when lastcmd (if (number? lastcmd) (sentence-for-lit lastcmd)
+                    (sentence-for-cmd lastcmd))))
+
+(define (s cmd)
+  (sentence-for-cmd cmd))
+(define (l lit)
+  (sentence-for-lit lit))
+(define (a)
+  (again))
+
+(define thethreads (map (λ (fn) (thread (λ () (read-file-in fn))))
+                        '("sentences/illiad.txt"
+                          "sentences/originofspecies.txt"
+                          "sentences/warandpeace.txt"
+                          "sentences/bible.txt"
+                          "sentences/raven.txt")))
+(define counterthread
+  (thread (λ ()
+            (let loop ([counter 0])
+            (if (andmap thread-dead? thethreads)
+                (display (~a "\n!!!FINISHED READING IN "counter" SECONDS!!!\n"))
+                (begin (sleep 5)
+                       (loop (+ 5 counter))))))))

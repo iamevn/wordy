@@ -105,7 +105,7 @@ EXIT
  stops program execution
 
 NOP
- any ratio other than those that map to instructions or a GOTO to a non-existent label. results in 0
+  any ratio other than those that map to instructions or a GOTO to a non-existent label. results in 0
 
 Note that LITERAL is the only way to specify a literal value either in variable names or as LABELs or as targets for GOTOs, everything that takes arguments--aside from LITERAL--takes the argument in the form of the result of another expression. This is especially useful in LABELs and GOTOs as the expression GOTO RAND INCHAR is perfectly valid (goto the label with the id matching a random integer from 0 to the value of an input character).
 Whether 0/0 results in RAND, LITERAL, GOTO, or NOP is undefined.

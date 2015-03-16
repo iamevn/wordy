@@ -24,4 +24,4 @@
               (vector-append prog (vector symbol))
               (equal? symbol 'LITERAL))))))
 
-;(run (read file))
+(run (read file))
