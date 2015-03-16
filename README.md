@@ -1,7 +1,7 @@
 # Wordy
 wip esoteric programming language inspired by [Gertrude](http://p-nand-q.com/programming/languages/gplz/gertrude.html) and designed at 3am the week before finals.
 
-The language is designed such that any set of period-separated sentences is valid source code. Each sentence maps to one of a couple dozen instructions. The instruction that a sentence represents is found by finding the average word length in that sentence (rounded to the nearest integer) and then counting the number of words above and below that average. The ratio [words above average]/[words below average] is looked up in the below table. 2/3 maps to the same instruction as 4/9 (VALUE) and any ratio not explicitly mapped to an instruction is a NOP.
+The language is designed such that any set of period-separated (or question marks and exclamation points) sentences is valid source code. Each sentence maps to one of a couple dozen instructions. The instruction that a sentence represents is found by finding the average word length in that sentence (rounded to the nearest integer) and then counting the number of words above and below that average. The ratio [words above average]/[words below average] is looked up in the below table. 2/3 maps to the same instruction as 4/9 (VALUE) and any ratio not explicitly mapped to an instruction is a NOP.
 
     ratio | command  |   | ratio | command 
     :----:|:--------:|---|:-----:|:--------:

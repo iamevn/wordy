@@ -4,16 +4,18 @@
 
 (define (read-sentence file)
   (if (eof-object? (peek-char file)) #f
-    (let loop ([ls '()] [word (read-word file)])
-      (cond [(not word) #f]
-            [(eos? word) (reverse
-                           (cons (substring word 0
-                                            (sub1 (string-length word)))
-                                 ls))]
-            [else (loop (cons word ls) (read-word file))]))))
+      (let loop ([ls '()] [word (read-word file)])
+        (cond [(not word) #f]
+              [(eos? word) (reverse
+                            (cons (substring word 0
+                                             (sub1 (string-length word)))
+                                  ls))]
+              [else (loop (cons word ls) (read-word file))]))))
 
 (define (eos? word)
-  (equal? #\. (string-ref word (sub1 (string-length word)))))
+  (or (equal? #\. (string-ref word (sub1 (string-length word))))
+      (equal? #\? (string-ref word (sub1 (string-length word))))
+      (equal? #\! (string-ref word (sub1 (string-length word))))))
 
 (define (read-word file)
   (let loop ([next-char (read-char file)]
@@ -34,13 +36,12 @@
       ;at the end of the sentence
       [(or (equal? #\. next-char)
            (equal? #\? next-char)
-           (equal? #\! next-char)
-           #;(equal? #\: next-char))
+           (equal? #\! next-char))
        (list->string (reverse (cons next-char word)))]
       ;skip over symbols
-      [(not (or (char-alphabetic? next-char)
+      #;[(not (or (char-alphabetic? next-char)
                 (char-numeric? next-char)))
        (loop (read-char file) word)]
       ;char to add to the word
       [else
-        (loop (read-char file) (cons next-char word))])))
+       (loop (read-char file) (cons next-char word))])))

@@ -23,8 +23,7 @@
 (define (read-file-in filename)
   (call-with-input-file filename
     (λ (file)
-      (add-to-db file filename)))
-  #;(close-connection))
+      (add-to-db file filename))))
 
 (define (sentence-for-cmd cmd)
   (set! lastcmd cmd)
@@ -51,16 +50,23 @@
 (define (a)
   (again))
 
-(define thethreads (map (λ (fn) (thread (λ () (read-file-in fn))))
-                        '("sentences/illiad.txt"
+#;(define thethreads (map (λ (fn) (thread (λ () (read-file-in fn))))
+                        '(;"sentences/alice.txt"
+                          "sentences/kampf.txt"
+                          "sentences/grimm.txt"
+                          "sentences/peterpan.txt"
+                          "sentences/mobydick.txt"
+                          "sentences/marktwain.txt"
+                          "sentences/raven.txt"
                           "sentences/originofspecies.txt"
-                          "sentences/warandpeace.txt"
                           "sentences/bible.txt"
-                          "sentences/raven.txt")))
-(define counterthread
+                          "sentences/illiad.txt"
+                          "sentences/warandpeace.txt"
+                          )))
+#;(define counterthread
   (thread (λ ()
             (let loop ([counter 0])
-            (if (andmap thread-dead? thethreads)
-                (display (~a "\n!!!FINISHED READING IN "counter" SECONDS!!!\n"))
-                (begin (sleep 5)
-                       (loop (+ 5 counter))))))))
+              (if (andmap thread-dead? thethreads)
+                  (display (~a "\n!!!FINISHED READING IN "counter" SECONDS!!!\n"))
+                  (begin (sleep 1)
+                         (loop (+ 1 counter))))))))

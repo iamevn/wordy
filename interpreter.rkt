@@ -26,5 +26,5 @@
   (call-with-input-file filename
     (λ (file) (run (read file)))))
 
-;(interpret "hello.txt")
+(interpret "hello.txt")
 ;(interpret "cat.txt")

@@ -1,4 +1,4 @@
-Inspired by Gertrude. Programs are a series of sentences ending in periods. For every sentence the average word length is calculated (hyphenated words count as one but don't count the hyphen character in length, similarly for apostrophies and other symbols), rounded to the nearest integer, and the ratio of [words of length greater than average]/[words of length less than average] is used to map a sentence to an instruction. (2/3 maps to the same instruction as 10/15)
+Inspired by Gertrude. Programs are a series of sentences ending in periods, question marks, or exclamation points. For every sentence the average word length is calculated (hyphenated words count as one but don't count the hyphen character in length, similarly for apostrophies and other symbols), rounded to the nearest integer, and the ratio of [words of length greater than average]/[words of length less than average] is used to map a sentence to an instruction. (2/3 maps to the same instruction as 10/15)
 
 ratio | command
 ------+---------
@@ -120,7 +120,7 @@ ASSIGN LITERAL 1 ADD VALUE GOTO NOP LITERAL 3
 OUTCHAR SUBTRACT ADD MULTIPLY LITERAL 2 MULTIPLY LITERAL 5 LITERAL 2 DIVIDE VALUE LITERAL 0 LITERAL 2 LITERAL 2
 OUTCHAR SUBTRACT VALUE LITERAL 1 MULTIPLY LITERAL 2 LITERAL 5
 OUTCHAR OUTCHAR VALUE LITERAL 0
-ASSIGN LITERAL 1 SUBTRACT OUTCHAR VALUE 1 ADD LITERAL 1 MULTIPLY SUBTRACT VALUE LITERAL 1 VALUE NOP LITERAL 4
+ASSIGN LITERAL 1 SUBTRACT OUTCHAR VALUE LITERAL 1 ADD LITERAL 1 MULTIPLY SUBTRACT VALUE LITERAL 1 VALUE NOP LITERAL 4
 OUTCHAR ADD ASSIGN VALUE GOTO NOP MULTIPLY MULTIPLY LITERAL 2 LITERAL 2 ADD DIVIDE VALUE LITERAL 1 LITERAL 10 LITERAL 1 LITERAL 4
 ASSIGN VALUE LITERAL 0 ADD OUTCHAR SUBTRACT VALUE VALUE LITERAL 0 LITERAL 8 MULTIPLY LITERAL 3 LITERAL 4
 OUTCHAR ADD VALUE LITERAL 0 ADD LITERAL 5 LITERAL 6
@@ -136,16 +136,16 @@ Translated to pseudocode (literal constants in {brackets} to signify that they'r
 0/1 {10} 13/7 0/1 {1} 1/2 2/3 1/1 1/3 0/1 {3} 3/7 5/9 1/2 3/4 
 0/1 {2} 3/4 0/1 {5} 0/1 {2} 4/1 2/3 0/1 {0} 0/1 {2} 0/1 {2} 
 3/7 5/9 2/3 0/1 {1} 3/4 0/1 {2} 0/1 {5} 3/7 3/7 2/3 0/1 {0} 
-13/7 0/1 {1} 5/9 3/7 2/3 {1} 1/2 0/1 {1} 3/4 5/9 2/3 0/1 {1} 
-2/3 2/5 0/1 {4} 3/7 1/2 13/7 2/3 1/1 3/2 3/4 3/4 0/1 {2} 0/1 
-{2} 1/2 4/1 2/3 0/1 {1} 0/1 {10} 0/1 {1} 0/1 {4} 13/7 2/3 0/1 
-{0} 1/2 3/7 5/9 2/3 2/3 0/1 {0} 0/1 {8} 3/4 0/1 {3} 0/1 {4} 
-3/7 1/2 2/3 0/1 {0} 1/2 0/1 {5} 0/1 {6} 3/7 1/2 2/3 5/4 0/1 
-{3} 3/7 1/2 3/4 0/1 {2} 0/1 {3} 2/3 1/3 3/7 2/3 3/2 3/7 3/4 
-0/1 {10} 0/1 {10} 3/7 5/9 2/3 2/3 3/1 1/2 1/2 0/1 {3} 0/1 {4} 
-0/1 {4}
+13/7 0/1 {1} 5/9 3/7 2/3 0/1 {1} 1/2 0/1 {1} 3/4 5/9 2/3 0/1
+{1} 2/3 2/5 0/1 {4} 3/7 1/2 13/7 2/3 1/1 3/2 3/4 3/4 0/1 {2}
+0/1 {2} 1/2 4/1 2/3 0/1 {1} 0/1 {10} 0/1 {1} 0/1 {4} 13/7 2/3
+0/1 {0} 1/2 3/7 5/9 2/3 2/3 0/1 {0} 0/1 {8} 3/4 0/1 {3} 0/1
+{4} 3/7 1/2 2/3 0/1 {0} 1/2 0/1 {5} 0/1 {6} 3/7 1/2 2/3 5/4
+0/1 {3} 3/7 1/2 3/4 0/1 {2} 0/1 {3} 2/3 1/3 3/7 2/3 3/2 3/7
+3/4 0/1 {10} 0/1 {10} 3/7 5/9 2/3 2/3 3/1 1/2 1/2 0/1 {3} 0/1
+{4} 0/1 {4}
 
-Hello World program in 167 sentences:
+Hello World program in 168 sentences:
 
 COMING SOON!
 
@@ -157,17 +157,16 @@ Cat:
 LABEL NOP ASSIGN NOP OUTCHAR INCHAR GOTO NOT VALUE NOP
 2/1 5/8 13/7 4/11 3/7 5/2 1/1 5/13 2/3 1/3
 
-Honestly this is very easy, much more simple than some.
+Honestly this is very easy, much more simple than some.  
 It is named after the Unix command cat, although this command is actually more powerful.
--
--
+"I know what it means well enough when I find a thing," said the Duck, "it's generally a frog or a worm."
+In both cases the manufacturer is one and the same Jew.
 In the beginning there was no sense of heuristic algorithms with which they wrote.
 Weirdly thruvian melodics are not terribly complex.
 This is harder than I thought.
--
-A tumbling set of of felines.
+We particularly cannot permit any individual State within the nation, and the Reich which represents it, sovereign power and independent State rank.
+It dried up any trickle of pity for him that may have remained in the pirates infuriated breast.
 Cats are fluffy but don't fuck with them unless you're ready for the consequences.
-
 
 
 Walking through the translation:
