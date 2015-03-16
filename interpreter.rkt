@@ -6,22 +6,25 @@
 (require "clean.rkt") ;clean
 (require racket/vector)
 
-(define file (open-input-file "cat.txt"))
-
 (define (read file)
   (let loop ([sen (read-sentence file)]
              [prog (make-vector 0)]
              [read-literal #f])
     (if (not sen) prog
-      (let* ([clean-sen (clean sen)]
-             [sen-stats (stats clean-sen)]
-             [val (if read-literal
-                    (ss-lit sen-stats)
-                    (ratio (ss-over sen-stats)
-                           (ss-under sen-stats)))]
-             [symbol (if read-literal val (ratio->cmd val))])
-        (loop (read-sentence file)
-              (vector-append prog (vector symbol))
-              (equal? symbol 'LITERAL))))))
+        (let* ([clean-sen (clean sen)]
+               [sen-stats (stats clean-sen)]
+               [val (if read-literal
+                        (ss-lit sen-stats)
+                        (ratio (ss-over sen-stats)
+                               (ss-under sen-stats)))]
+               [symbol (if read-literal val (ratio->cmd val))])
+          (loop (read-sentence file)
+                (vector-append prog (vector symbol))
+                (equal? symbol 'LITERAL))))))
 
-(run (read file))
+(define (interpret filename)
+  (call-with-input-file filename
+    (λ (file) (run (read file)))))
+
+;(interpret "hello.txt")
+;(interpret "cat.txt")

@@ -21,12 +21,22 @@ The language is designed such that any set of period-separated sentences is vali
 These ratios are not final as I would like to do some analysis on text to see what common and uncommon ratios are so I can map more important instructions (like GOTO) to the more common ratios.
 
 # Example cat program:
-    Honestly this is very easy, much more simple than some.
+
+    Honestly this is very easy, much more simple than some.  
     It is named after the Unix command cat, although this command is actually more powerful.
+    "I know what it means well enough when I find a thing," said the Duck, "it's generally a frog or a worm."
+    In both cases the manufacturer is one and the same Jew.
     In the beginning there was no sense of heuristic algorithms with which they wrote.
     Weirdly thruvian melodics are not terribly complex.
     This is harder than I thought.
+    We particularly cannot permit any individual State within the nation, and the Reich which represents it, sovereign power and independent State rank.
+    It dried up any trickle of pity for him that may have remained in the pirates infuriated breast.
     Cats are fluffy but don't fuck with them unless you're ready for the consequences.
+
+# Using the interpreter:
+
+Run interpreter.rkt and call (interpret filename) where filename is a string containing the relative path of the file to interpret. Ex: (interpret "hello.txt")
+I haven't done much testing yet so no guarantees that things don't break horribly. I have a feeling the thing that's most likely to break is the stuff in readsentence.rkt and clean.rkt if they're given some really weird input.
 
 # Walking through steps to interpret some text
 
