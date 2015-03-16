@@ -1,6 +1,6 @@
 #lang racket
 ;translate ratios to symbols and symbols to ratios
-(provide ratio ratio->cmd cmd->ratio)
+(provide (struct-out ratio) ratio->cmd cmd->ratio simplify-ratio)
 
 (struct ratio (top bot) #:transparent)
 (define cmd-ht 
@@ -54,10 +54,16 @@
    'RAND (ratio 1 0) 
    'EXIT (ratio 5 3)))
 
-(define (ratio->cmd ratio)
-  (if (zero? (ratio-bot ratio))
+(define (ratio->cmd rat)
+  (if (zero? (ratio-bot rat))
       'RAND
-      (hash-ref cmd-ht (/ (ratio-top ratio) (ratio-bot ratio)) 'NOP)))
+      (hash-ref cmd-ht (/ (ratio-top rat) (ratio-bot rat)) 'NOP)))
 
 (define (cmd->ratio cmd)
   (hash-ref ratio-ht cmd))
+
+(define (simplify-ratio rat)
+  (if (zero? (ratio-bot rat))
+    (ratio 1 0)
+    (let ([n (/ (ratio-top rat) (ratio-bot rat))])
+      (ratio (numerator n) (denominator n)))))

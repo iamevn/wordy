@@ -32,7 +32,10 @@
             (char-whitespace? next-char))
        (list->string (reverse word))]
       ;at the end of the sentence
-      [(equal? #\. next-char)
+      [(or (equal? #\. next-char)
+           (equal? #\? next-char)
+           (equal? #\! next-char)
+           #;(equal? #\: next-char))
        (list->string (reverse (cons next-char word)))]
       ;skip over symbols
       [(not (or (char-alphabetic? next-char)
