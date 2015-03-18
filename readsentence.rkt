@@ -6,8 +6,8 @@
   (if (eof-object? (peek-char file)) #f
       (let loop ([ls '()] [word (read-word file)])
         (cond [(not word) #f]
-              [(eos? word) (reverse
-                            (cons (substring word 0
+              [(eos? word) (reverse (cons word ls)
+                            #;(cons (substring word 0 ;let's see what this does now
                                              (sub1 (string-length word)))
                                   ls))]
               [else (loop (cons word ls) (read-word file))]))))

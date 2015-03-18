@@ -2,9 +2,8 @@
 (require db)
 (require racket/string)
 (require "ratios.rkt")
-(provide db-add sentences-with-literal sentences-with-ratio sentences-matching-no-ratio close-connection)
+(provide db-add sentences-with-literal sentences-with-ratio sentences-matching-no-ratio close-connection refresh-cache)
 
-;(struct ratio (top bot) #:transparent)
 (define (connect)
   (mysql-connect #:server "localhost"	 	 	 	 
                  #:database "wordy"	 	 	 	 
@@ -47,47 +46,71 @@
 
 (define (sentences-with-literal literal)
   (unless (connected? connection) (set! connection (connect)))
-  (map (λ (v) (string-split (vector-ref v 0)))
-       (query-rows connection
-                   "SELECT sentence FROM literals WHERE literal = ?;"
-                   literal)))
+  (let* ([ht-sen (hash-ref literal-ht literal #f)]
+         [db-sen (if ht-sen #f
+                     (map (λ (v) (string-split (vector-ref v 0)))
+                          (query-rows connection
+                                      "SELECT sentence FROM literals WHERE literal = ?;"
+                                      literal)))])
+    (cond [ht-sen ht-sen]
+          [db-sen (hash-set! literal-ht literal db-sen)
+                  db-sen]
+          [else #f])))
 
 (define (sentences-with-ratio ratio)
   (unless (connected? connection) (set! connection (connect)))
-  (map (λ (v) (string-split (vector-ref v 0)))
-       (query-rows connection
-                   "SELECT sentence FROM ratios WHERE top = ? AND bot = ?;"
-                   (ratio-top ratio)
-                   (ratio-bot ratio))))
+  (let* ([ht-sen (hash-ref ratio-ht ratio #f)]
+         [db-sen (if ht-sen #f
+                     (map (λ (v) (string-split (vector-ref v 0)))
+                          (query-rows connection
+                                      "SELECT sentence FROM ratios WHERE top = ? AND bot = ?;"
+                                      (ratio-top ratio)
+                                      (ratio-bot ratio))))])
+    (cond [ht-sen ht-sen]
+          [db-sen (hash-set! ratio-ht ratio db-sen)
+                  db-sen]
+          [else #f])))
 
 (define (sentences-matching-no-ratio)
   (unless (connected? connection) (set! connection (connect)))
-  (map (λ (v) (string-split (vector-ref v 0)))
-  (query-rows connection
-              "SELECT sentence FROM ratios WHERE NOT ((top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?));"
-              13 7 
-              2 3 
-              0 1 
-              2 1 
-              1 1 
-              1 2 
-              5 9 
-              3 4 
-              4 1 
-              1 4 
-              2 9 
-              1 5 
-              7 3 
-              9 5 
-              11 17 
-              13 3 
-              5 13 
-              4 7 
-              5 2 
-              15 14 
-              3 7 
-              1 0 
-              5 3)))
+  (let* ([ht-sen (hash-ref ratio-ht -1 #f)]
+         [db-sen (if ht-sen #f
+                     (map (λ (v) (string-split (vector-ref v 0)))
+                          (query-rows connection
+                                      "SELECT sentence FROM ratios WHERE NOT ((top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?) OR (top = ? AND bot = ?));"
+                                      13 7 
+                                      2 3 
+                                      0 1 
+                                      2 1 
+                                      1 1 
+                                      1 2 
+                                      5 9 
+                                      3 4 
+                                      4 1 
+                                      1 4 
+                                      2 9 
+                                      1 5 
+                                      7 3 
+                                      9 5 
+                                      11 17 
+                                      13 3 
+                                      5 13 
+                                      4 7 
+                                      5 2 
+                                      15 14 
+                                      3 7 
+                                      1 0 
+                                      5 3)))])
+    (cond [ht-sen ht-sen]
+          [db-sen (hash-set! ratio-ht -1 db-sen)
+                  db-sen]
+          [else #f])))
 
 (define (close-connection)
   (disconnect connection))
+
+(define ratio-ht (make-hash))
+(define literal-ht (make-hash))
+(define (refresh-cache)
+  (set! ratio-ht (make-hash))
+  (set! literal-ht (make-hash)))

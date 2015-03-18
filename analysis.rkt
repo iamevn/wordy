@@ -6,6 +6,8 @@
 (require racket/vector)
 (require "db.rkt")
 
+(provide sentence-for-cmd sentence-for-lit)
+
 (define lastcmd #f)
 
 (define (add-to-db file [source #f])
@@ -50,23 +52,25 @@
 (define (a)
   (again))
 
-#;(define thethreads (map (λ (fn) (thread (λ () (read-file-in fn))))
-                        '(;"sentences/alice.txt"
-                          "sentences/kampf.txt"
-                          "sentences/grimm.txt"
-                          "sentences/peterpan.txt"
-                          "sentences/mobydick.txt"
-                          "sentences/marktwain.txt"
-                          "sentences/raven.txt"
-                          "sentences/originofspecies.txt"
-                          "sentences/bible.txt"
-                          "sentences/illiad.txt"
-                          "sentences/warandpeace.txt"
-                          )))
-#;(define counterthread
-  (thread (λ ()
-            (let loop ([counter 0])
-              (if (andmap thread-dead? thethreads)
-                  (display (~a "\n!!!FINISHED READING IN "counter" SECONDS!!!\n"))
-                  (begin (sleep 1)
-                         (loop (+ 1 counter))))))))
+(define (do-some-database-stuff)
+  (define thethreads (map (λ (fn) (thread (λ () (read-file-in fn))))
+                          '("sentences/alice.txt"
+                            "sentences/kampf.txt"
+                            "sentences/grimm.txt"
+                            "sentences/peterpan.txt"
+                            "sentences/mobydick.txt"
+                            "sentences/marktwain.txt"
+                            "sentences/raven.txt"
+                            "sentences/originofspecies.txt"
+                            "sentences/bible.txt"
+                            "sentences/illiad.txt"
+                            "sentences/warandpeace.txt"
+                            )))
+  (define counterthread
+    (thread (λ ()
+              (let loop ([counter 0])
+                (if (andmap thread-dead? thethreads)
+                    (display (~a "\n!!!FINISHED READING IN "counter" SECONDS!!!\n"))
+                    (begin (sleep 1)
+                           (loop (+ 1 counter))))))))
+  (thread-wait counterthread))
