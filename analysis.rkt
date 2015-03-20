@@ -29,17 +29,11 @@
 
 (define (sentence-for-cmd cmd)
   (set! lastcmd cmd)
-  (string-join
-   (let ([ls (if (equal? cmd 'NOP) (sentences-matching-no-ratio)
-                 (sentences-with-ratio (cmd->ratio cmd)))])
-     (list-ref ls (random (length ls))))
-   " "))
+  (if (equal? cmd 'NOP) (sentences-matching-no-ratio)
+      (sentences-with-ratio (cmd->ratio cmd))))
 (define (sentence-for-lit lit)
   (set! lastcmd lit)
-  (string-join
-   (let ([ls (sentences-with-literal lit)])
-     (list-ref ls (random (length ls))))
-   " "))
+  (sentences-with-literal lit))
 
 (define (again)
   (when lastcmd (if (number? lastcmd) (sentence-for-lit lastcmd)

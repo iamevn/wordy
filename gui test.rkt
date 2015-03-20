@@ -21,12 +21,6 @@
   (new menu%
        [label "&File"]
        [parent menu-bar]))
-(define chache-refresh-item
-  (new menu-item%
-       [label "&refresh cache"]
-       [parent file-menu]
-       [callback (λ (m e) (send frame set-status-text "refreshing cache")
-                   (refresh-cache))]))
 (define exit-item
   (new menu-item%
        [label "&exit"]
