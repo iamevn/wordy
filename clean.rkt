@@ -5,8 +5,7 @@
 (define (clean sen)
   (define (clean-word word)
     (list->string (filter (λ (ch) (or (char-alphabetic? ch)
-                                      (char-numeric? ch)
-                                      (equal? #\. ch)))
+                                      (char-numeric? ch)))
                           (string->list word))))
   ;remove non alphanumeric characters from each word
   (define (phase1 sen)

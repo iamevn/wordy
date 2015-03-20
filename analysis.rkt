@@ -23,7 +23,7 @@
         (loop (read-sentence file))))))
 
 (define (read-file-in filename)
-  (call-with-input-file filename
+  (call-with-input-file (~a "sentences/"filename)
     (λ (file)
       (add-to-db file filename))))
 
@@ -54,18 +54,17 @@
 
 (define (do-some-database-stuff)
   (define thethreads (map (λ (fn) (thread (λ () (read-file-in fn))))
-                          '("sentences/alice.txt"
-                            "sentences/kampf.txt"
-                            "sentences/grimm.txt"
-                            "sentences/peterpan.txt"
-                            "sentences/mobydick.txt"
-                            "sentences/marktwain.txt"
-                            "sentences/raven.txt"
-                            "sentences/originofspecies.txt"
-                            "sentences/bible.txt"
-                            "sentences/illiad.txt"
-                            "sentences/warandpeace.txt"
-                            )))
+                          '("alice.txt"
+                            "kampf.txt"
+                            "grimm.txt"
+                            "peterpan.txt"
+                            "mobydick.txt"
+                            "marktwain.txt"
+                            "raven.txt"
+                            "originofspecies.txt"
+                            "bible.txt"
+                            "illiad.txt"
+                            "warandpeace.txt")))
   (define counterthread
     (thread (λ ()
               (let loop ([counter 0])
