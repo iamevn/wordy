@@ -1,0 +1,24 @@
+> Move the pointer to the right
+< Move the pointer to the left
++ Increment memory cell under pointer
+- Decrement memory cell under pointer
+. Output character signified by the cell under the pointer
+, Input character into the cell under the pointer
+[ Jump past the matching ] if the cell under the pointer is 0
+] Jump back to the matching [ if the cell under the pointer is nonzero
+
+LABEL LITERAL 0
+
+> -> AND VALUE LITERAL 0 ASSIGN LITERAL 0 ADD VALUE LITERAL 0 LITERAL 1
+< -> AND VALUE LITERAL 0 ASSIGN LITERAL 0 SUBTRACT VALUE LITERAL 0 LITERAL 1
++ -> AND VALUE LITERAL 0 ASSIGN VALUE LITERAL 0 ADD VALUE VALUE LITERAL 0 LITERAL 1
+- -> AND VALUE LITERAL 0 ASSIGN VALUE LITERAL 0 SUBTRACT VALUE VALUE LITERAL 0 LITERAL 1
+. -> AND VALUE LITERAL 0 OUTCHAR VALUE VALUE LITERAL 0
+, -> AND VALUE LITERAL 0 ASSIGN VALUE LITERAL 0 INCHAR
+[ -> AND VALUE LITERAL 0 OR VALUE VALUE LITERAL 0 GOTO LITERAL x\nOR VALUE LITERAL 0 LABEL LITERAL -x
+] -> AND VALUE LITERAL 0 AND VALUE VALUE LITERAL 0 GOTO LITERAL -x\nOR VALUE LITERAL 0 LABEL LITERAL x
+     where 'x' is 1 for the first [] pair, 2 for the second, etc
+
+AND VALUE LITERAL 0 EXIT
+ASSIGN LITERAL 0 LITERAL 1
+GOTO LITERAL 0
