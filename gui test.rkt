@@ -30,7 +30,17 @@
        [label "cancel"]
        [parent line-num-buttons]
        [callback (λ (b e) (send line-num-dialog show #f))]))
-
+;; dialog to show when opening a file
+(define loading-dialog
+  (new frame%
+       [label "loading..."]
+       [style '(float)]
+       [alignment '(center center)]))
+(define loading-text
+  (new message%
+       [label "loading file..."]
+       [parent loading-dialog]
+       [auto-resize #t]))
 ;; root window
 (define frame 
   (new frame%
@@ -243,13 +253,21 @@
 
 (define (open-wimpmode)
   (let ([fn (get-file)])
-    (when fn (call-with-input-file fn
+    (when fn 
+      (send frame show #f)
+      (send loading-text set-label (~a "loading "fn))
+      (send loading-dialog show #t)
+      (call-with-input-file fn
                (λ (f)
                  (set-rows-to (let loop ([symbol (read f)])
                                 (if (eof-object? symbol) '()
-                                    (cons symbol (loop (read f)))))))))))
+                                    (cons symbol (loop (read f))))))))
+      (send frame show #t)
+      (send loading-dialog show #f)
+      )))
 (define (set-rows-to ls)
   (let ([len (length ls)])
+    (set! num-rows len)
     (set! rows (map (λ (n) (new row% [parent panel] [n n])) (build-list len values)))
     (send panel change-children (λ (c) rows))
     (let loop ([i 0] [rows rows] [ls ls])
