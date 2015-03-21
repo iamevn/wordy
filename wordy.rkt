@@ -11,23 +11,28 @@
       (list->vector (let loop ([symbol (read f)])
                       (if (eof-object? symbol) '()
                           (cons symbol (loop (read f)))))))))
+(define (vector-display vec)
+  (void (vector-map (λ (elem) (display (~a elem" "))) vec)))
 
 (define args (current-command-line-arguments))
 (define wimpmode #f)
 (define to-pseudocode #f)
-
-(let ([wimpmode (vector-member "--wimpmode" args)]
-      [to-pseudocode (vector-member "--to-pseudocode" args)])
-  (cond [(not (equal? 1 
-                      (vector-length (vector-filter-not (λ (elem) (or (equal? elem "--to-pseudocode")
-                                                                      (equal? elem "--wimpmode")))
-                                                        args))))
-         (display-usage)]
-        [(and wimpmode to-pseudocode)
-         (display (read-wimpmode (vector-ref args 0)))]
-        [wimpmode
-         (run (read-wimpmode (vector-ref args 0)))]
-        [to-pseudocode
-         (display (call-with-input-file (vector-ref args 0) 
-                    (λ (file) (read-to-instructions file))))]
-        [else (interpret (vector-ref args 0))]))
+(cond [(not (and (> (vector-length args) 0)
+                 (file-exists? (vector-ref args 0))))
+       (display-usage)]
+      [else
+       (let ([wimpmode (vector-member "--wimpmode" args)]
+             [to-pseudocode (vector-member "--to-pseudocode" args)])
+         (cond [(not (equal? 1 
+                             (vector-length (vector-filter-not (λ (elem) (or (equal? elem "--to-pseudocode")
+                                                                             (equal? elem "--wimpmode")))
+                                                               args))))
+                (display-usage)]
+               [(and wimpmode to-pseudocode)
+                (vector-display (read-wimpmode (vector-ref args 0)))]
+               [wimpmode
+                (run (read-wimpmode (vector-ref args 0)))]
+               [to-pseudocode
+                (vector-display (call-with-input-file (vector-ref args 0) 
+                                  (λ (file) (read-to-instructions file))))]
+               [else (interpret (vector-ref args 0))]))])
