@@ -110,7 +110,7 @@ For a right-infinite tape, rules to translate brainfuck into wordy are as follow
     [ -> AND VALUE LITERAL 0 OR VALUE VALUE LITERAL 0 GOTO LITERAL x
          OR VALUE LITERAL 0 LABEL SUBTRACT LITERAL 0 LITERAL x
     ] -> AND VALUE LITERAL 0 AND VALUE VALUE LITERAL 0 GOTO SUBTRACT LITERAL 0 LITERAL x
-         VALUE LITERAL 0 LABEL LITERAL x
+         OR VALUE LITERAL 0 LABEL LITERAL x
          (where 'x' is 1 for the first [] pair, 2 for the second, etc)
     
     end of file -> AND VALUE LITERAL 0 EXIT
