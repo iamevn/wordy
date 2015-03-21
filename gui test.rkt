@@ -1,7 +1,7 @@
 #lang racket/gui
-(require "analysis.rkt")
-(require "db.rkt")
-(require "ratios.rkt")
+(require "inc/analysis.rkt")
+(require "inc/db.rkt")
+(require "inc/ratios.rkt")
 ;; dialog to enter a line number
 (define (valid-line-num-in-field field)
   ;if field is anumber

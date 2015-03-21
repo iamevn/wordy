@@ -1,6 +1,6 @@
 #lang racket
-(require "interpreter.rkt")
-(require "run.rkt")
+(require "inc/interpreter.rkt")
+(require "inc/run.rkt")
 
 (define (display-usage)
   (display "Usage: ./wordy filename [--to-pseudocode][--wimpmode]\nthe --to-pseudocode flag doesn't run the program, just ouputs the pseudocode translated from filename.\nthe --wimpmode flag marks that filename consists of pseudocode and not actual interpretable sentences"))
