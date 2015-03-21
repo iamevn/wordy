@@ -49,6 +49,14 @@
         (instruction 0 (λ () symbol))
         (hash-ref instruction-ht symbol)))
   
+  (define (skip-next)
+    (let loop ([i 1])
+      (if (zero? i) (void)
+          (let* ([inst (inst-ref (vector-ref prog idx))]
+                 [argc (instruction-argc inst)])
+            (set! idx (add1 idx))
+            (loop (+ i (sub1 argc)))))))
+  
   (define (get-result prog)
     (let* ([inst (inst-ref (vector-ref prog idx))]
            [argc (instruction-argc inst)]
@@ -56,6 +64,12 @@
       (set! idx (add1 idx))
       (cond [(zero? argc)
              (code)]
+            [(equal? (vector-ref prog (sub1 idx)) 'AND) ;messy but these extra conditions fix the bug and implement the correct behavior of AND and OR
+             (if (< (get-result prog) 1) (begin (skip-next) 0)
+                 (get-result prog))]
+            [(equal? (vector-ref prog (sub1 idx)) 'OR)
+             (if (> (get-result prog) 0) (begin (skip-next) 1)
+                 (get-result prog))]
             [(equal? argc 1)
              (apply code (list (get-result prog)))]
             [(equal? argc 2)
@@ -68,28 +82,3 @@
                                      (kill-thread theprocess)))))
   
   (thread-wait theprocess))
-
-
-
-(define test-prog '#(OUTNUM ADD LITERAL 4 LITERAL 5
-                            OUTCHAR LITERAL 10
-                            OUTCHAR ADD OUTNUM LITERAL 6 MULTIPLY LITERAL 25 LITERAL 389
-                            EXIT))
-
-(define hello 
-  '#(ASSIGN GOTO NOP ADD MULTIPLY MULTIPLY LITERAL 2 LITERAL 2 LITERAL 2 MULTIPLY LITERAL 10 LITERAL 10
-            ASSIGN LITERAL 1 ADD VALUE GOTO NOP LITERAL 3
-            OUTCHAR SUBTRACT ADD MULTIPLY LITERAL 2 MULTIPLY LITERAL 5 LITERAL 2 DIVIDE VALUE LITERAL 0 LITERAL 2 LITERAL 2
-            OUTCHAR SUBTRACT VALUE LITERAL 1 MULTIPLY LITERAL 2 LITERAL 5
-            OUTCHAR OUTCHAR VALUE LITERAL 0
-            ASSIGN LITERAL 1 SUBTRACT OUTCHAR VALUE LITERAL 1 ADD LITERAL 1 MULTIPLY SUBTRACT VALUE LITERAL 1 VALUE NOP LITERAL 4
-            OUTCHAR ADD ASSIGN VALUE GOTO NOP MULTIPLY MULTIPLY LITERAL 2 LITERAL 2 ADD DIVIDE VALUE LITERAL 1 LITERAL 10 LITERAL 1 LITERAL 4
-            ASSIGN VALUE LITERAL 0 ADD OUTCHAR SUBTRACT VALUE VALUE LITERAL 0 LITERAL 8 MULTIPLY LITERAL 3 LITERAL 4
-            OUTCHAR ADD VALUE LITERAL 0 ADD LITERAL 5 LITERAL 6
-            OUTCHAR ADD VALUE NOP LITERAL 3
-            OUTCHAR ADD MULTIPLY LITERAL 2 LITERAL 3 VALUE NOP
-            OUTCHAR VALUE NOP
-            OUTCHAR MULTIPLY LITERAL 10 LITERAL 10
-            OUTCHAR SUBTRACT VALUE VALUE NOP ADD ADD LITERAL 3 LITERAL 4 LITERAL 4))
-
-(define cat '#(LABEL NOP ASSIGN NOP OUTCHAR INCHAR GOTO NOT VALUE NOP))
