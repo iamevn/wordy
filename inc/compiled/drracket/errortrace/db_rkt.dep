@@ -1,1 +1,0 @@
-("6.1.1" ("38adddda7418e83dc37656f4b47a70ed773f37a6" . "02227c790c22634fe78bf81c662e5ae7630323bb") #"/home/evan/desktop/wordy/inc/ratios.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"db" #"main.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"string.rkt"))
