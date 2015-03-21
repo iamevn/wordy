@@ -35,8 +35,19 @@ These ratios are not final as I would like to do some analysis on text to see wh
 
 # Using the interpreter:
 
-Run interpreter.rkt and call (interpret filename) where filename is a string containing the relative path of the file to interpret. Ex: (interpret "hello.txt")
-I haven't done much testing yet so no guarantees that things don't break horribly. I have a feeling the thing that's most likely to break is the stuff in readsentence.rkt and clean.rkt if they're given some really weird input.
+Run wordy.rkt with the first command line arg as the filename you want to interpret and with the optional flags --to-pseudocode or --wimpmode as second and/or third args. 
+
+--to-pseudocode will translate the file to pseudocode and output that instead of running it
+
+--wimpmode will set it to read pseudocode in the same format as --to-pseudocode outputs from the file instead of normal sentences.
+
+    > racket wordy.rkt hello.txt
+    Hello, world!
+    > racket wordy.rkt cat.txt --to-pseudocode
+    LABEL NOP ASSIGN NOP OUTCHAR INCHAR GOTO NOT VALUE NOP
+    > racket wordy.rkt cat.txt --to-pseudocode > cat.wordy
+    > racket wordy.rkt hello.txt --to-pseudocode | racket wordy.rkt cat.wordy --wimpmode
+    ASSIGN GOTO NOP ADD MULTIPLY MULTIPLY LITERAL 2 LITERAL 2 LITERAL 2 MULTIPLY LITERAL 10 LITERAL 10 ASSIGN LITERAL 1 ADD VALUE GOTO NOP LITERAL 3 OUTCHAR SUBTRACT ADD MULTIPLY LITERAL 2 MULTIPLY LITERAL 5 LITERAL 2 DIVIDE VALUE LITERAL 0 LITERAL 2 LITERAL 2 OUTCHAR SUBTRACT VALUE LITERAL 1 MULTIPLY LITERAL 2 LITERAL 5 OUTCHAR OUTCHAR VALUE LITERAL 0 ASSIGN LITERAL 1 SUBTRACT OUTCHAR VALUE LITERAL 1 ADD LITERAL 1 MULTIPLY SUBTRACT VALUE LITERAL 1 VALUE NOP LITERAL 4 OUTCHAR ADD ASSIGN VALUE GOTO NOP MULTIPLY MULTIPLY LITERAL 2 LITERAL 2 ADD DIVIDE VALUE LITERAL 1 LITERAL 10 LITERAL 1 LITERAL 4 ASSIGN VALUE LITERAL 0 ADD OUTCHAR SUBTRACT VALUE VALUE LITERAL 0 LITERAL 8 MULTIPLY LITERAL 3 LITERAL 4 OUTCHAR ADD VALUE LITERAL 0 ADD LITERAL 5 LITERAL 6 OUTCHAR ADD VALUE NOP LITERAL 3 OUTCHAR ADD MULTIPLY LITERAL 2 LITERAL 3 VALUE NOP OUTCHAR VALUE NOP OUTCHAR MULTIPLY LITERAL 10 LITERAL 10 OUTCHAR SUBTRACT VALUE VALUE NOP ADD ADD LITERAL 3 LITERAL 4 LITERAL 4
 
 # Walking through steps to interpret some text
 
