@@ -2,8 +2,6 @@
 (require "analysis.rkt")
 (require "db.rkt")
 (require "ratios.rkt")
-
-(define args (current-command-line-arguments))
 ;; dialog to enter a line number
 (define (valid-line-num-in-field field)
   ;if field is anumber

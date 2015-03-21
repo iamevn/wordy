@@ -5,8 +5,8 @@
 (require "run.rkt") ; run
 (require "clean.rkt") ;clean
 (require racket/vector)
-
-(define (read file)
+(provide interpret read-to-instructions)
+(define (read-to-instructions file)
   (let loop ([sen (read-sentence file)]
              [prog (make-vector 0)]
              [read-literal #f])
@@ -23,8 +23,8 @@
                 (equal? symbol 'LITERAL))))))
 
 (define (interpret filename)
-  (call-with-input-file filename
-    (λ (file) (run (read file)))))
+  (run (call-with-input-file filename
+         (λ (file) (read-to-instructions file)))))
 
-(interpret "hello.txt")
+;(interpret "hello.txt")
 ;(interpret "cat.txt")
