@@ -39,7 +39,7 @@ LITERAL VALUE
  Results in the literal value following this instruction. This value is parsed differently from other sentences. Instead of the value being the ratio of [larger than average words]/[smaller than average words], this value is the number of words of average length. Note that it is not possible to have a literal negative.
 
 LABEL ID
- A label with id ID is defined. A label with the same ID as a previously defined label is a runtime error (alternative idea: just overwrite the previous one). Putting a label in the middle of an expression is completely valid (for example: ADD LABEL LITERAL 1 OR VALUE NOP GOTO LITERAL 1). For a label to become defined, execution must reach the LABEL instruction.
+ A label with id ID is defined. A label with the same ID as a previously defined label overwrites the previous one. Putting a label in the middle of an expression is completely valid (for example: ADD LABEL LITERAL 1 OR VALUE NOP GOTO LITERAL 1). For a label to become defined, execution must reach the LABEL instruction.
  Results in 1.
 
 GOTO ID
