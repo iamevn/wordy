@@ -25,6 +25,3 @@
 (define (interpret filename)
   (run (call-with-input-file filename
          (λ (file) (read-to-instructions file)))))
-
-;(interpret "hello.txt")
-;(interpret "cat.txt")

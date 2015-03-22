@@ -30,7 +30,7 @@
      'LESS? (instruction 2 (λ (a b) (if (< a b) 1 0)))
      'GREATER? (instruction 2 (λ (a b) (if (> a b) 1 0)))
      'OR (instruction 2 (λ (a b) (if (zero? a) b a))) ;these aren't quite right, need to make b not even run if a is true
-     'AND (instruction 2 (λ (a b) (if (zero? a) a b))) ; need to make b not even run if a is false
+     'AND (instruction 2 (λ (a b) (if (zero? a) a b))) ; need to make b not even run if a is false ;both of these are special cases where something could get skipped so need to handle them differently
      'NOT (instruction 1 (λ (a) (if (zero? a) 1 0))) 
      'INNUM (instruction 0 (λ () (let loop ([in (read)])
                                    (if (number? in) in (loop (read))))))
@@ -38,7 +38,10 @@
                                     (if (eof-object? ch) 0
                                         (char->integer ch)))))
      'OUTNUM (instruction 1 (λ (a) (display a) a)) 
-     'OUTCHAR (instruction 1 (λ (a) (display (integer->char a)) a))
+     'OUTCHAR (instruction 1 (λ (a) (if (and (>= a 0) (<= a 1114111) (not (and (>= a 52296) (<= a 57343)))) ;valid character by racket's definition
+                                        (display (integer->char a))
+                                        (display (integer->char 0))) ;other implementations of wordy can do something else when trying to output an invalid character, decided to not replicate how C handles negative values for chars here
+                                a))
      'RAND (instruction 1 (λ (a) (* (random (add1 (abs a)))
                                     (if (negative? a) -1 1))))
      'EXIT (instruction 0 (λ () (kill-thread theprocess)))
