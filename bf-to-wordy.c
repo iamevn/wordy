@@ -10,6 +10,10 @@ struct node {
 struct node *new_node(int val, struct node *next)
 {
 	struct node *new_node = (struct node*) malloc(sizeof(struct node));
+        if (new_node == NULL) {
+            perror("malloc");
+            exit(-1);
+        }
 	new_node->val = val;
 	new_node->next = next;
 
